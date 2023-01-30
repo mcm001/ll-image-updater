@@ -19,7 +19,7 @@ jobs:
         cpu: cortex-a7
         image_additional_mb: 1500
         commands: |
-            wget https://git.io/JJrEP -O install.sh
+            wget http://git.io/JJrEP -O install.sh
             chmod +x install.sh
             ./install.sh
 
