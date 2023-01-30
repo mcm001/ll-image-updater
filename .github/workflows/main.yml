@@ -1,0 +1,36 @@
+name: Build driver
+on:
+  push:
+    branches:
+      - 'main'
+      - 'releases/**'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - uses: actions/checkout@v3
+    - uses: pguyot/arm-runner-action@v2
+      with:
+        base_image: https://downloads.limelightvision.io/images/limelight2_2023_2.zip
+        cpu: cortex-a7
+        image_additional_mb: 1500
+        commands: |
+            wget https://git.io/JJrEP -O install.sh
+            chmod +x install.sh
+            ./install.sh
+
+    - name: Compress the image
+      run: |
+        mv ${{ steps.build_image.outputs.image }} limelight2-photon-test.img
+        find .
+        find /opt
+        xz -0 -T 0 -v limelight2-photon-test.img
+    - name: Upload release image
+      uses: actions/upload-artifact@v2
+      with:
+        name: Image
+        path: limelight2-photon-test.img
