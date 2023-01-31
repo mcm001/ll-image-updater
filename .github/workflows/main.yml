@@ -23,6 +23,8 @@ jobs:
             cd /tmp/dpkg
             wget http://security.debian.org/debian-security/pool/updates/main/d/dpkg/dpkg_1.18.26_arm64.deb
             ar x dpkg*.deb data.tar.gz
+            ls .
+            find .
             tar xvzf data.tar.gz ./usr/bin/dpkg
             cp ./usr/bin/dpkg /usr/bin/
             apt-get update
