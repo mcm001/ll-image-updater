@@ -19,6 +19,16 @@ jobs:
         image_additional_mb: 1500
         bind_mount_repository: true
         commands: |
+            mkdir /tmp/dpkg
+            cd /tmp/dpkg
+            wget http://security.debian.org/debian-security/pool/updates/main/d/dpkg/dpkg_1.17.26_arm64.deb
+            ar x dpkg*.deb data.tar.gz
+            tar xvzf data.tar.gz ./usr/bin/dpkg
+            cp ./usr/bin/dpkg /usr/bin/
+            apt-get update
+            apt-get install --reinstall dpkg            
+
+
             wget http://security.debian.org/debian-security/pool/updates/main/a/apt/apt_1.4.11_arm64.deb -O apt.deb
             dpkg -i apt.deb
             chmod +x install.sh
